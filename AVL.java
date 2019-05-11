@@ -35,6 +35,51 @@ class AVL {
         return rt;
     }
 
+    public void Delete(Integer val) {
+        root = Delete(val, root);
+    }
+
+    private NodeAVL Delete(Integer value, NodeAVL rt) {
+        if (rt.val == value) {
+            if (rt.rc == null && rt.lc == null)
+                rt = null;
+            else {
+                if (rt.rc == null)
+                    rt = rt.lc;
+                else if (rt.lc == null)
+                    rt = rt.rc;
+                else {
+                    NodeAVL temp = rt.lc;
+                    while (temp.rc != null)
+                        temp = temp.rc;
+                    int x = temp.val;
+                    Delete(temp.val);
+                    rt.val = x;
+                }
+            }
+        } else {
+            if (value > rt.val) {
+                rt.rc = Delete(value, rt.rc);
+                if (Height(rt.rc) - Height(rt.lc) > 1) {
+                    if (value > rt.rc.val) {
+                        rt = LeftRotation(rt);
+                    } else
+                        rt = RightLeftRotation(rt);
+                }
+            } else {
+                rt.lc = Delete(value, rt.lc);
+                if (Height(rt.lc) - Height(rt.rc) > 1) {
+                    if (value < rt.lc.val) {
+                        rt = RightRotation(rt);
+                    } else
+                        rt = LeftRightRotation(rt);
+                }
+            }
+        }
+        return rt;
+
+    }
+
     Integer Height(NodeAVL a) {
         if (a == null)
             return -1;
