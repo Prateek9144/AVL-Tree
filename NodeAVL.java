@@ -1,8 +1,8 @@
 public class NodeAVL {
-    Integer val;
+    int val;
     NodeAVL rc, lc;
 
-    NodeAVL(Integer val) {
+    NodeAVL(int val) {
         rc = null;
         lc = null;
         this.val = val;
